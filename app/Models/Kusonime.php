@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+// use request
+use Illuminate\Http\Request;
 // use goutte
 use Goutte\Client;
 
@@ -11,11 +13,19 @@ class Kusonime extends Model
 {
     use HasFactory;
 
-    public function getAnime()
+    public function getAnime(Request $request)
     {
+        $url = $request->input('url');
+        // validate if $url is empty
+        if (empty($url)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'url is empty'
+            ]);
+        }
         // scrape kusonime.com using goutte
         $client = new Client();
-        $crawler = $client->request('GET', 'https://kusonime.com/fairy-tail-subtitle-indonesia-7/');
+        $crawler = $client->request('GET', $url);
         // get page title
         $title = $crawler->filter('title')->text();
         $smokeddl = [];

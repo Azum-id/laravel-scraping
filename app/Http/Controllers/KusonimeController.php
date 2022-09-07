@@ -8,8 +8,8 @@ use App\Models\Kusonime;
 
 class KusonimeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Kusonime::getAnime();
+        return Kusonime::getAnime($request);
     }
 }
