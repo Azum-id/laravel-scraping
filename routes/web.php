@@ -15,7 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return [
+        'index' => true,
+        'message' => 'Welcome to Kusonime API',
+        'author' => 'Azusa ID',
+        'param' => '?url=[URL Kusonime]'
+    ];
 });
 
 Route::get('/kusonime', [KusonimeController::class, 'index']);
