@@ -31,22 +31,29 @@ class Kusonime extends Model
         $smokeddl = [];
         $download = $crawler->filter('.dlbod')->first()->filter('.smokeddl')->each(function ($node) use (&$smokeddl) {
             $smokettl = [];
-            $smokeurl = [];
             $node->filter('.smokettl')->each(function ($node) use (&$smokettl) {
                 $smokettl = $node->text();
             });
+            $smokeurl = [];
             $node->filter('.smokeurl')->each(function ($node) use (&$smokeurl) {
-                // get all url
-                $smokeurl = $node->filter('a')->each(function ($node) {
-                    return $node->attr('href');
+                $strong = $node->filter('strong')->text();
+                $smokeurl[] = [
+                    'title' => $strong,
+                    'data' => array()
+                ];
+                $node->filter('a')->each(function ($node) use (&$smokeurl) {
+                    $smokeurl[count($smokeurl) - 1]['data'][] = [
+                        'host' => $node->text(),
+                        'data' => $node->attr('href')
+                    ];
                 });
             });
             $smokeddl[] = [
-                'smokettl' => $smokettl,
-                'smokeurl' => $smokeurl
+                'download_title' => $smokettl,
+                'download_data' => $smokeurl
             ];
         });
 
-        return ['title' => $title, 'smokeddl' => $smokeddl];
+        return ['page_title' => $title, 'data' => $smokeddl];
     }
 }
