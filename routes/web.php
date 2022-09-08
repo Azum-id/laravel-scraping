@@ -29,7 +29,7 @@ Route::get('/instagram', function () {
     try {
         $url = request()->query('url');
         $client = new \GuzzleHttp\Client();
-        $response = $client->request('GET', $url . '?__a=1&__d=dis', ['proxy' => 'http://dbb39cd56b8640d58d46f6847c65c34ab3aaf3ab425@proxy.scrape.do:8080', 'verify' => false]) or die('Error');
+        $response = $client->request('GET', $url . '?__a=1&__d=dis', ['proxy' => env('SCRAPEDO_PROXY'), 'verify' => false]) or die('Error');
         $json = json_decode($response->getBody());
         if (json_last_error() !== JSON_ERROR_NONE) {
             return json_last_error();
