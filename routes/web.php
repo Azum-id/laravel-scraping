@@ -19,9 +19,8 @@ use Illuminate\Http\Request;
 Route::get('/', function () {
     return [
         'index' => true,
-        'message' => 'Welcome to Kusonime API',
+        'message' => 'Welcome to Azusa API',
         'author' => 'Azusa ID',
-        'param' => '?url=[URL Kusonime]'
     ];
 });
 
